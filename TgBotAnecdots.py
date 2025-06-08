@@ -10,11 +10,14 @@ import random
 import requests
 from bs4 import BeautifulSoup
 from config import bot_token
+from db_manager import DB
 
 
 #Create
 dp = Dispatcher()
 bot = Bot(token=bot_token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+
+db_manager = DB('test.db')
 
 class DialogStates(StatesGroup):
     waiting_answer = State()
@@ -22,14 +25,14 @@ class DialogStates(StatesGroup):
 @dp.callback_query()
 async def callback_query(callback: CallbackQuery):
     if callback.data == 'random_anec':
-        await callback.message.answer(text = "привет")
+        await callback.message.answer(db_manager.get_random_anecdot())
     if callback.data == '3_anec':
         await callback.message.answer(text = "пока не придумал")
     if callback.data == 'add_anec':
         await callback.message.answer(text = "пока не придумал")
     if callback.data == 'select_cat':
         await callback.message.answer(text = "пока не придумал")
-    
+    await callback.answer()
 
 #@dp.message(DialogStates.waiting_answer)
 async def command_start_handler(message: Message, state: FSMContext) -> None:
