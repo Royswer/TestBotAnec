@@ -1,8 +1,7 @@
 from sqlalchemy import create_engine, insert, select, update, delete, func
 from sqlalchemy.orm import Session
-from db_models import Base, Anecdots, Categories
-import asyncio
-from aiogram.types import Message
+from db_models import Base, Anecdots, Categories, CategoriesAnecdots
+
 
 class DB:
     def __init__(self, db_path):
@@ -25,12 +24,23 @@ class DB:
             for anec in exec:
                 return anec
     
-    # def add_anec(self, users: list[dict]):
-    #     with Session(self.engine) as session:
-    #         q = insert(User).prefix_with('OR IGNORE')
-    #         session.execute(q, users)
-    #         session.commit()
+    def add_anec(self, text: str, user_id: int = None):
+        with Session(self.engine) as session:
+            q = insert(Anecdots).values(text = text, author = user_id)
+            session.execute(q)
+            session.commit()
 
+    def select_categories(self) -> list[dict]:
+        with Session(self.engine) as session:
+            q = select(Categories.id, Categories.category)
+            result = session.execute(q)
+            list_ = []
+            for res in result:
+                list_.append({
+                    'id': res[0],
+                    'category': res[1]
+                })
+            return list_
     
     
 #Тесты:
@@ -38,5 +48,5 @@ if __name__ == '__main__':
     db_manager = DB('test.db')
     db_manager.create_db()
 
-    test = db_manager.get_3_random_anecdot()
-    print(test)
+    test = db_manager.select_categories()
+    #print(test)

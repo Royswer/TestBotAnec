@@ -19,15 +19,17 @@ db_manager = DB('test.db')
 
 class DialogStates(StatesGroup):
     waiting_answer = State()
+    waiting_anecdot = State()
 
 @dp.callback_query()
-async def callback_query(callback: CallbackQuery):
+async def callback_query(callback: CallbackQuery, state: FSMContext):
     if callback.data == 'random_anec':
         await callback.message.answer(db_manager.get_random_anecdot())
     if callback.data == '3_anec':
         await callback.message.answer(db_manager.get_random_anecdots(3))
     if callback.data == 'add_anec':
-        await callback.message.answer(text = "пока не придумал")
+        await callback.message.answer(text = "Введите анекдот:")
+        await state.set_state(DialogStates.waiting_anecdot)
     if callback.data == 'select_cat':
         await callback.message.answer(text = "пока не придумал")
     await callback.answer()
@@ -48,6 +50,16 @@ async def command_start_handler(message: Message) -> None:
         ])
     await message.answer(f"Привет! @{message.from_user.username}", reply_markup=markup)
 
+@dp.message(DialogStates.waiting_anecdot)
+async def echo_handler(message: Message) -> None:
+    print(message.text)
+    db_manager.add_anec(message.text, message.from_user.id)
+    categories = db_manager.select_categories()
+    buttons = []
+    for categ in categories:
+        buttons.append([InlineKeyboardButton(text = categ['category'], callback_data = '1')])
+    markup = InlineKeyboardMarkup(inline_keyboard = buttons)
+    await message.answer(text = "Спасибо, а теперь выбери категорию для своего анекдота:", reply_markup = markup)
 
 #Эхо(дубль сообщения пользователя)
 @dp.message()
