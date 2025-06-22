@@ -7,7 +7,6 @@ from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, R
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 import random
-import requests
 from config import bot_token
 from db_manager import DB
 
