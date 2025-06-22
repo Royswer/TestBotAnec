@@ -8,7 +8,6 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 import random
 import requests
-from bs4 import BeautifulSoup
 from config import bot_token
 from db_manager import DB
 
@@ -56,7 +55,6 @@ async def command_start_handler(message: Message) -> None:
 async def echo_handler(message: Message) -> None:
     try:
         await message.answer(f'Я тоже так могу: {message.text}')
-        #await message.send_copy(chat_id=message.chat.id)
     except TypeError:
         await message.answer("Nice try!")
 
