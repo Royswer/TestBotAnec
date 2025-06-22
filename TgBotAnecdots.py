@@ -27,7 +27,7 @@ async def callback_query(callback: CallbackQuery):
     if callback.data == 'random_anec':
         await callback.message.answer(db_manager.get_random_anecdot())
     if callback.data == '3_anec':
-        await callback.message.answer(text = "пока не придумал")
+        await callback.message.answer(db_manager.get_random_anecdots(3))
     if callback.data == 'add_anec':
         await callback.message.answer(text = "пока не придумал")
     if callback.data == 'select_cat':
