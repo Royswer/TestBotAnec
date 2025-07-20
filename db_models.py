@@ -13,7 +13,7 @@ class Anecdots(Base):
 class Categories(Base):
     __tablename__ = "categories"
     id: Mapped[int] = mapped_column(primary_key=True)
-    category: Mapped[str] = mapped_column(String(30))
+    category: Mapped[str] = mapped_column(String(30), unique=True)
 
 class CategoriesAnecdots(Base):
     __tablename__ = "categories_anecdots"
