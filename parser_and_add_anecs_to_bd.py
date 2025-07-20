@@ -54,6 +54,7 @@ def main(start_page, end_page):
             cat_id = mapping_cat[cat]
             if cat_id:
                 db_manager.add_cats_anecs(cat_id, anec_id)
+    #
         
 
     
