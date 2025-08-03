@@ -31,7 +31,7 @@ async def callback_query(callback: CallbackQuery, state: FSMContext):
         await callback.message.answer(text = "Введите анекдот:")
         await state.set_state(DialogStates.waiting_anecdot)
     if callback.data == 'select_cat':
-        await callback.message.answer(text = "пока не придумал")
+        await callback.message.answer(text = "Выберите категорию:")
     await callback.answer()
 
 #@dp.message(DialogStates.waiting_answer)
