@@ -9,6 +9,7 @@ sqlalchemy = "*"
 requests = "*"
 beautifulsoup4 = "*"
 lxml = "*"
+dotenv = "*"
 
 [dev-packages]
 
