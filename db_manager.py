@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, insert, select, update, delete, func
+from sqlalchemy import create_engine, insert, select, func
 from sqlalchemy.orm import Session
 from db_models import Base, Anecdots, Categories, CategoriesAnecdots
+
 
 class DB:
     def __init__(self, db_path='db.db'):
@@ -102,6 +103,10 @@ class DB:
                 session.add(link)
             
             session.commit()
+
+
+    
+
 
 
 # Тесты
