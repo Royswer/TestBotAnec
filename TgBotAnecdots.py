@@ -4,13 +4,13 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from bot.start import router as router_start
-from bot.random_anec_from_categories import router as router_random_anec_from_cat
-from bot.random_anec import router as router_random_anec
-from bot.random_anecs import router as router_random_anecs
-from bot.add_anec import router as router_add_anec
-from bot.message import router as router_message
-from bot.info import router as info
+from routers.start import router as router_start
+from routers.random_anec_from_categories import router as router_random_anec_from_cat
+from routers.random_anec import router as router_random_anec
+from routers.random_anecs import router as router_random_anecs
+from routers.add_anec import router as router_add_anec
+from routers.message import router as router_message
+from routers.info import router as info
 
 from config import bot_token
 
