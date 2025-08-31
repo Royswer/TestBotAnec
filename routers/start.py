@@ -15,4 +15,4 @@ async def start_cmd(message: Message) -> None:
         [InlineKeyboardButton(text='Выбрать категорию', callback_data='select_cat')],
         [InlineKeyboardButton(text='Общая информация', callback_data='info')]
     ])
-    await message.answer(f"Привет, @{message.from_user.username}! Выбери действие:", reply_markup=markup)
+    await message.answer(f"Привет, @{message.from_user.username}? Выбери действие:", reply_markup=markup)

@@ -1,0 +1,15 @@
+[Unit]
+Description=Bot Service
+After=network.target
+
+[Service]
+Type=idle
+Restart=always
+RestartSec=3
+User=root
+# EnvironmentFile=/etc/myapp/.env
+WorkingDirectory=/home/TestBotAnec
+ExecStart=/home/TestBotAnec/my_venv/bin/python /home/TestBotAnec/TgBotAnecdots.py
+
+[Install]
+WantedBy=multi-user.target
