@@ -1,10 +1,10 @@
-from sqlalchemy import create_engine, insert, select, func
+from sqlalchemy import create_engine, insert, select, func, update
 from sqlalchemy.orm import Session
-from db_models import Base, Anecdots, Categories, CategoriesAnecdots
+from .db_models import Base, Anecdots, Categories, CategoriesAnecdots
 
 
 class DB:
-    def __init__(self, db_path='db.db'):
+    def __init__(self, db_path='database/db.db'):
         self.engine = create_engine(f"sqlite+pysqlite:///{db_path}")
         self.create_db()
         
@@ -14,14 +14,14 @@ class DB:
     # Получить 1 случайный анекдот
     def get_random_anecdot(self):
         with Session(self.engine) as session:
-            q = select(Anecdots.text).order_by(func.random()).limit(1)
+            q = select(Anecdots.text).where(Anecdots.status == 'Одобрено').order_by(func.random()).limit(1)
             result = session.execute(q).first()
             return result[0] if result else "Нет анекдотов"
 
     # Получить N случайных анекдотов
     def get_random_anecdots(self, count):
         with Session(self.engine) as session:
-            q = select(Anecdots.text).order_by(func.random()).limit(count)
+            q = select(Anecdots.text).where(Anecdots.status == 'Одобрено').order_by(func.random()).limit(count)
             result = session.execute(q).scalars().all()
             return result if result else ["Нет анекдотов"]
 
@@ -38,9 +38,9 @@ class DB:
             result = session.execute(q).first()
             return result[0] if result else "Нет анекдотов в этой категории"
 
-    def add_anec(self, text: str, user_id: int = None):
+    def add_anec(self, status: str, text: str, user_id: int = None):
         with Session(self.engine) as session:
-            q = insert(Anecdots).values(text=text, author=user_id)
+            q = insert(Anecdots).values(text=text, author=user_id, status=status)
             b = session.execute(q)
             session.commit()
             return b.inserted_primary_key[0] if b.inserted_primary_key else None
@@ -103,8 +103,11 @@ class DB:
                 session.add(link)
             
             session.commit()
-
-
+    def update_status_anec(self, anec_id, status):
+        q = update(Anecdots).values(status=status).where(Anecdots.id==anec_id)
+        with Session(self.engine) as session:
+            session.execute(q)
+            session.commit()
     
 
 

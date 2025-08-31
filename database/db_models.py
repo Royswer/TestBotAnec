@@ -9,6 +9,7 @@ class Anecdots(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     text: Mapped[str] = mapped_column(String(2000))
     author: Mapped[int] = mapped_column(Integer, nullable=True)
+    status: Mapped[str] = mapped_column(String(50))
 
 class Categories(Base):
     __tablename__ = "categories"

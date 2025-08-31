@@ -1,0 +1,4 @@
+-- database: ./db.db
+
+SELECT * FROM anecdots;
+UPDATE anecdots SET status='Модерация' WHERE id>2

@@ -1,0 +1,4 @@
+-- database: ./database/db.db
+
+SELECT * FROM anecdots;
+UPDATE anecdots SET status='Одобрено'
